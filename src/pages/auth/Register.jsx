@@ -6,9 +6,13 @@ import { useForm } from "react-hook-form"
 import { IoMdPerson } from "react-icons/io"
 import { MdEmail, MdPassword } from "react-icons/md"
 import * as yup from "yup"
+import { registerUser } from "../../api/authApi"
+import { Link, useNavigate } from "react-router-dom"
 
 
 const Register = () => {
+
+  const navigate = useNavigate()
 
 const Schema = yup.object({
   userName : yup.string().required(),
@@ -24,6 +28,11 @@ resolver : yupResolver(Schema)
 })
 
 const submit = handleSubmit((data) => {
+  const {userName, email, password} = data
+
+  registerUser({userName, email, password}).then(() => {
+    navigate("/sign-in")
+  })
   console.log(data, "data from form");
   reset()
 })
@@ -116,7 +125,7 @@ const submit = handleSubmit((data) => {
 
           <button className="flex w-full h-12 border-purple-600 justify-center items-center text-purple-600 border text-base font-semibold cursor-pointer hover:scale-x-105 duration-75 transition-all rounded-full">Sign In with Google</button>
 
-          <p>Already have an account? <span className="text-purple-600">Login</span> </p>
+          <p>Already have an account? <Link to="/sign-in"><span className="text-purple-600">Login</span></Link> </p>
         </div>
 
 

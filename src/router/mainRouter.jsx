@@ -3,6 +3,7 @@ import LayOut from "../components/build/LayOut";
 import LandingPage from "../pages/landingPage";
 import HomePage from "../pages/HomePage";
 import Register from "../pages/auth/Register";
+import SignIn from "../pages/auth/SignIn";
 
 export const mainRouter = createBrowserRouter([
     {
@@ -22,5 +23,9 @@ export const mainRouter = createBrowserRouter([
     {
         path : "/reg",
         element : <Register />
-    }
+    },
+    {
+        path : "/sign-in",
+        element : <SignIn />
+    },
 ])
