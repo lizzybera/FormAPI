@@ -8,11 +8,14 @@ import { MdEmail, MdPassword } from "react-icons/md"
 import * as yup from "yup"
 import { registerUser } from "../../api/authApi"
 import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import Loader from "../../components/reuse/Loader"
 
 
 const Register = () => {
 
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
 const Schema = yup.object({
   userName : yup.string().required(),
@@ -29,8 +32,9 @@ resolver : yupResolver(Schema)
 
 const submit = handleSubmit((data) => {
   const {userName, email, password} = data
-
+setLoading(true)
   registerUser({userName, email, password}).then(() => {
+    setLoading(false)
     navigate("/sign-in")
   })
   console.log(data, "data from form");
@@ -39,7 +43,12 @@ const submit = handleSubmit((data) => {
 
 
   return (
-    <div className="w-full flex justify-center items-center bg-[rgb(228,172,102)]" style={{ background: "linear-gradient(90deg, rgba(228,172,102,1) 0%, rgba(215,214,79,1) 35%, rgba(205,65,117,1) 100%)" }}>
+   <>
+    {
+      loading && <Loader />
+    }
+
+<div className="w-full flex justify-center items-center bg-[rgb(228,172,102)]" style={{ background: "linear-gradient(90deg, rgba(228,172,102,1) 0%, rgba(215,214,79,1) 35%, rgba(205,65,117,1) 100%)" }}>
     <form onSubmit={submit} className="w-[40%] px-3 py-7 shadow-lg bg-white rounded-md flex flex-col justify-center items-center gap-6">
         <h1 className="text-xl font-bold">Sign Up</h1>
         <p className="font-medium">Create your account</p>
@@ -131,6 +140,7 @@ const submit = handleSubmit((data) => {
 
       </form>
     </div>
+   </>
   )
 }
 
