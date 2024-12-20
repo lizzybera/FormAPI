@@ -10,12 +10,15 @@ import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import Loader from "../../components/reuse/Loader"
 import Swal from "sweetalert2"
+import { useDispatch } from "react-redux"
+import { createUser } from "../../global/GlobalState"
 
 
 const SignIn = () => {
 
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
 
   const Schema = yup.object({
     email: yup.string().email().required(),
@@ -35,6 +38,7 @@ const SignIn = () => {
     signInUser({ email, password }).then((res) => {
       if (res) {
         setLoading(false)
+        dispatch(createUser(res))
           Swal.fire({
             icon : 'success',
             title : 'Welcome back',

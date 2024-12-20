@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    theme : false
+    theme : false,
+    AuthUserInitialState : null | ""
 }
 
 const GlobalState = createSlice({
@@ -10,10 +11,16 @@ const GlobalState = createSlice({
   reducers: {
     themed : (state) => {
         state.theme = !state.theme
+    },
+    createUser : (state, {payload}) => {
+      state.AuthUserInitialState = payload
+    },
+    logOut : (state) => {
+      state.AuthUserInitialState = null
     }
   }
 });
 
-export const {themed} = GlobalState.actions
+export const {themed, createUser, logOut} = GlobalState.actions
 
 export default GlobalState.reducer
